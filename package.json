@@ -1,0 +1,24 @@
+{
+  "name": "@cyyynthia/x11-wallpaper",
+  "version": "0.1.0",
+  "description": "Utility wrapper around node-x11 to read/write the desktop wallpaper on x11",
+  "repository": "https://github.com/cyyynthia/x11-wallpaper",
+  "author": "Cynthia <cynthia@cynthia.dev>",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "engines": {
+    "node": ">= 14",
+    "pnpm": ">= 6"
+  },
+  "dependencies": {
+    "x11": "^2.3.0"
+  },
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  }
+}

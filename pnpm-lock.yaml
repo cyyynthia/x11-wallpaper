@@ -1,0 +1,20 @@
+lockfileVersion: 5.3
+
+specifiers:
+  x11: ^2.3.0
+
+dependencies:
+  x11: 2.3.0
+
+packages:
+
+  /os-homedir/1.0.2:
+    resolution: {integrity: sha1-/7xJiDNuDoM94MFox+8VISGqf7M=}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /x11/2.3.0:
+    resolution: {integrity: sha1-vazO3M2sJIL9Vg8FEee/K9nh2/I=}
+    dependencies:
+      os-homedir: 1.0.2
+    dev: false
