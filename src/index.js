@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { connect } from './x.js'
+import { connect, getScreens as xGetScreens } from './x.js'
 import { encode, decode } from './pixmap.js'
 
 async function getRootPixmapId (X, screen, raw) {
@@ -87,8 +87,16 @@ export async function setWallpaper (wallpaper) {
   X.ChangeProperty(0, screen.root, X.atoms.ESETROOT_PMAP_ID, X.atoms.PIXMAP, 32, payload)
 
   // XSetCloseDownMode(RetainTemporary)
+  // This is not exposed by node-x11, so here it is hand-crafted.
   X.pack_stream.pack('CCS', [ 112, 2, 1 ])
   X.pack_stream.flush()
 
   X.close()
+}
+
+export async function getScreens () {
+  const X = await connect()
+  const screens = await xGetScreens(X)
+  X.close()
+  return screens
 }

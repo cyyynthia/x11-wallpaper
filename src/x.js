@@ -27,6 +27,21 @@
  */
 
 import x11 from 'x11'
+let cachedRandr = null
+
+async function getRandr (X) {
+  if (cachedRandr === null) {
+    await new Promise((resolve) => {
+      X.require('randr', (err, ext) => {
+        cachedRandr = err ? false : ext
+        resolve()
+      })
+    })
+  }
+
+  if (cachedRandr === false) throw new Error('RANDR not available')
+  return cachedRandr
+}
 
 export async function connect () {
   return new Promise((resolve, reject) => {
@@ -39,6 +54,46 @@ export async function connect () {
         display.client.InternAtom(false, 'ESETROOT_PMAP_ID', (err) => {
           if (err) return reject(err)
           resolve(display.client)
+        })
+      })
+    })
+  })
+}
+
+export async function getScreens (X) {
+  return new Promise((resolve, reject) => {
+    getRandr(X).then((randr) => {
+      randr.GetScreenResources(X.display.screen[0].root, (err, resources) => {
+        if (err) return reject(err)
+        const screens = []
+        const promises = []
+        for (const output of resources.outputs) {
+          promises.push(new Promise((resolve, reject) => {
+            randr.GetOutputInfo(output, 0, (err, output) => {
+              if (err) return reject(err)
+              if (output.connection) return resolve()
+
+              randr.GetCrtcInfo(output.crtc, 0, (err, crtc) => {
+                if (err) return reject(err)
+                screens.push({
+                  output: output.name,
+                  x: crtc.x,
+                  y: crtc.y,
+                  width: crtc.width,
+                  height: crtc.height,
+                })
+                resolve()
+              })
+            })
+          }))
+        }
+
+        Promise.all(promises).then(() => {
+          resolve({
+            width: X.display.screen[0].pixel_width,
+            height: X.display.screen[0].pixel_height,
+            screens: screens,
+          })
         })
       })
     })

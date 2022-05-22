@@ -35,14 +35,41 @@ declare module '@cyyynthia/x11-wallpaper' {
     data: Buffer
   }
 
+  export type WallpaperLayout = Record<string, Wallpaper>
+
+  export type Screen = {
+    output: string
+    x: number
+    y: number
+    width: number
+    height: number
+  }
+
+  export type ScreenConfig = {
+    /** Total X screen width */
+    width: number
+
+    /** Total X screen height */
+    height: number
+
+    /** Physical screens layout */
+    screens: Screen[]
+  }
+
   /**
-   * Gets the currently set wallpaper
+   * Gets the currently set wallpaper.
    */
   export async function getWallpaper (): Promise<Wallpaper>
 
   /**
-   * Sets the desktop wallpaper
-   * @param wallpaper The wallpaper to set
+   * Sets the desktop wallpaper.
+   * @param wallpaper The wallpaper to set.
    */
   export async function setWallpaper (wallpaper: Wallpaper): Promise<void>
+
+  /**
+   * Gets the screen configuration.
+   * @returns the total size of the X screen, and physical screen layout.
+   */
+   export async function getScreens (): Promise<ScreenConfig>
 }
