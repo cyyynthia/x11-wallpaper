@@ -1,6 +1,6 @@
 {
   "name": "@cyyynthia/x11-wallpaper",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Utility wrapper around node-x11 to read/write the desktop wallpaper on x11",
   "repository": "https://github.com/cyyynthia/x11-wallpaper",
   "author": "Cynthia <cynthia@cynthia.dev>",

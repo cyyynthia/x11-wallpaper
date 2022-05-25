@@ -59,17 +59,17 @@ declare module '@cyyynthia/x11-wallpaper' {
   /**
    * Gets the currently set wallpaper.
    */
-  export async function getWallpaper (): Promise<Wallpaper>
+  export function getWallpaper (): Promise<Wallpaper>
 
   /**
    * Sets the desktop wallpaper.
    * @param wallpaper The wallpaper to set.
    */
-  export async function setWallpaper (wallpaper: Wallpaper): Promise<void>
+  export function setWallpaper (wallpaper: Wallpaper): Promise<void>
 
   /**
    * Gets the screen configuration.
    * @returns the total size of the X screen, and physical screen layout.
    */
-   export async function getScreens (): Promise<ScreenConfig>
+  export function getScreens (): Promise<ScreenConfig>
 }
